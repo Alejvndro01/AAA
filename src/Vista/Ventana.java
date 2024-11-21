@@ -809,18 +809,6 @@ public class Ventana extends javax.swing.JFrame{
 
     jTablePais.setModel(model);
     
-    jTablePais.setRowHeight(80);
-    
-    jTablePais.setAutoResizeMode(jTablePais.AUTO_RESIZE_OFF);
-    
-
-    
-    for(int i = 0; i < jTablePais.getColumnCount(); i++){
-        TableCellRenderer wrapRender = null;
-        jTablePais.getColumnModel().getColumn(i).setCellRenderer(wrapRender);
-    }
-    
-
     String[] datos = new String[13]; 
     try {
         st = conexion.createStatement();
