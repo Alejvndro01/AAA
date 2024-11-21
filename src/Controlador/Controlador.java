@@ -47,6 +47,10 @@ public class Controlador implements ActionListener {
         this.vista.btnGuardar.addActionListener(this);
         this.vista.btnLimpiar.addActionListener(this);
         this.vista.ComboContinente.addActionListener(this);
+        this.vista.ComboComp1.addActionListener(this);
+        this.vista.ComboComp2.addActionListener(this);
+        this.vista.btnComparar.addActionListener(this);
+        this.vista.ComboOrdenar.addActionListener(this);
         
         //Btnes Ciudad
         this.vista.btnAgregarC.addActionListener(this);
@@ -136,7 +140,6 @@ public class Controlador implements ActionListener {
         } 
         if (e.getSource() == vista.btnConsultarIdio) {
             ConsultarIdioma();
-            centrarCeldas(vista.jTableIdioma);
         }
         if (e.getSource() == vista.btnModificarIdio) {
             ModificarIdioma();
@@ -188,28 +191,6 @@ public class Controlador implements ActionListener {
         vista.txtOficialdio.setText("");
         vista.txtCodigoPIdio.setText("");
         vista.txtNombreIdio.requestFocus();
-    }
-
-    public void centrarCeldas(JTable tabla) {
-        DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
-        tcr.setHorizontalAlignment(SwingConstants.CENTER);
-        for (int i = 0; i < vista.jTablePais.getColumnCount(); i++) {
-            tabla.getColumnModel().getColumn(i).setCellRenderer(tcr);
-        }
-    }
-    public void centrarCeldasC(JTable tabla) {
-        DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
-        tcr.setHorizontalAlignment(SwingConstants.CENTER);
-        for (int i = 0; i < vista.jTableCiudad.getColumnCount(); i++) {
-            tabla.getColumnModel().getColumn(i).setCellRenderer(tcr);
-        }
-    }
-    public void centrarCeldasIdio(JTable tabla) {
-        DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
-        tcr.setHorizontalAlignment(SwingConstants.CENTER);
-        for (int i = 0; i < vista.jTableIdioma.getColumnCount(); i++) {
-            tabla.getColumnModel().getColumn(i).setCellRenderer(tcr);
-        }
     }
     
    //Codigo de la ventana Pais
@@ -632,18 +613,18 @@ public class Controlador implements ActionListener {
 }
     
     private void filtrarCiudadesPorPais() {
-        String paisSeleccionado = String.valueOf(vista.ComboPais.getSelectedItem());
+    String paisSeleccionado = String.valueOf(vista.ComboPais.getSelectedItem());
 
-        if ("Seleccione un Pais:".equals(paisSeleccionado)) {
-            mostrarTodasLasCiudades(); 
-            } else {
-                List<Ciudad> ciudades = CiuOp.ConsultarPorPais(paisSeleccionado);
-                actualizarTablaCiudades(ciudades);
-            }
+    if ("Seleccione un Pais:".equals(paisSeleccionado)) {
+        mostrarTodasLasCiudades(); 
+    } else {
+        List<Ciudad> ciudades = CiuOp.ConsultarPorNombrePais(paisSeleccionado);
+        actualizarTablaCiudades(ciudades);
     }
+}
 
     private void mostrarTodasLasCiudades() {
-        List<Ciudad> ciudades = CiuOp.ConsultarPorPais(""); 
+        List<Ciudad> ciudades = CiuOp.ConsultarPorNombrePais(""); 
         actualizarTablaCiudades(ciudades);
     }
 
@@ -785,18 +766,18 @@ public class Controlador implements ActionListener {
     }
     
     private void filtrarIdiomasPorPais() {
-        String paisSeleccionado = String.valueOf(vista.ComboIdioma.getSelectedItem());
+    String paisSeleccionado = String.valueOf(vista.ComboIdioma.getSelectedItem());
 
-        if ("Seleccione un Pais:".equals(paisSeleccionado)) {
-            mostrarTodosLosIdiomas(); 
-            } else {
-                List<Idioma> idiomas = IdioOP.ConsultarPorPais(paisSeleccionado);
-                actualizarTablaIdiomas(idiomas);
-            }
+    if ("Seleccione un Pais:".equals(paisSeleccionado)) {
+        mostrarTodosLosIdiomas(); 
+    } else {
+        List<Idioma> idiomas = IdioOP.ConsultarPorNombrePais(paisSeleccionado);
+        actualizarTablaIdiomas(idiomas);
     }
+}
 
     private void mostrarTodosLosIdiomas() {
-        List<Idioma> idiomas = IdioOP.ConsultarPorPais(""); 
+        List<Idioma> idiomas = IdioOP.ConsultarPorNombrePais(""); 
         actualizarTablaIdiomas(idiomas);
     }
 

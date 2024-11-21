@@ -5,10 +5,10 @@ import javax.swing.JOptionPane;
 
 public class Conexion {
     
-    private String ip = "10.160.0.127"; 
-    private String bd = "dilan";
+    private String ip = "localhost"; 
+    private String bd = "paises";
     private String url="jdbc:mysql://"+ip+":3306/"+bd;
-    private String user="alumnos"; 
+    private String user="root"; 
     private String pass="alumnos"; 
     
     Connection con;

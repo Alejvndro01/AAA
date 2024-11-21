@@ -118,7 +118,7 @@ public class PaisOperaciones {
             pais.setTipoGobierno(rs.getInt("tipoGobierno"));
             pais.setRegion(rs.getString("region"));
             pais.setSuperficie(rs.getFloat("superficie"));
-            pais.setAñoIndependencia(rs.getInt("anioIndependencia"));
+            pais.setAñoIndependencia(rs.getInt("añoIndependencia"));
             pais.setExpectativaVida(rs.getFloat("expectativaVida"));
             pais.setPnb(rs.getFloat("pnb"));
             pais.setJefeEstado(rs.getString("jefeEstado"));
@@ -151,7 +151,7 @@ public class PaisOperaciones {
             pais.setTipoGobierno(rs.getInt("tipoGobierno"));
             pais.setRegion(rs.getString("region"));
             pais.setSuperficie(rs.getFloat("superficie"));
-            pais.setAñoIndependencia(rs.getInt("anioIndependencia"));
+            pais.setAñoIndependencia(rs.getInt("añoIndependencia"));
             pais.setExpectativaVida(rs.getFloat("expectativaVida"));
             pais.setPnb(rs.getFloat("pnb"));
             pais.setJefeEstado(rs.getString("jefeEstado"));

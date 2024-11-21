@@ -129,34 +129,30 @@ public class IdiomaOperaciones {
             return idiomas; 
     }
    
-    public List<Idioma> ConsultarPorPais(String codigo) {
-        List<Idioma> idiomas = new ArrayList<>();
-        String sql;
-            if (codigo.isEmpty()) {
-                sql = "SELECT * FROM idioma"; 
-            } else {
-                sql = "SELECT * FROM idioma WHERE codigoPais = ?";
-            }
-        try {
-            con = conectar.getConnection();
-            ps = con.prepareStatement(sql);
-            if (!codigo.isEmpty()) {
-                ps.setString(1, codigo);
-            }
-            rs = ps.executeQuery();
-                while (rs.next()) {
-                    Idioma idioma = new Idioma();
-                    idioma.setIdIdioma(rs.getInt("idIdioma"));
-                    idioma.setNombreIdioma(rs.getString("nombreIdioma"));
-                    idioma.setOficial(rs.getInt("oficial"));
-                    idioma.setCodigoPais(rs.getString("codigoPais"));
-                    idioma.setPorcentaje(rs.getInt("porcentaje"));
-                    
-                    idiomas.add(idioma);
-                }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al consultar los idiomas: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    public List<Idioma> ConsultarPorNombrePais(String nombrePais) {
+    List<Idioma> idiomas = new ArrayList<>();
+    String sql = "SELECT i.* FROM idioma i JOIN pais p ON i.codigoPais = p.codigoPais WHERE p.nombrePais = ?";
+    
+    try (Connection con = conectar.getConnection();
+         PreparedStatement ps = con.prepareStatement(sql)) {
+        
+        ps.setString(1, nombrePais);
+        ResultSet rs = ps.executeQuery();
+        
+        while (rs.next()) {
+            Idioma idioma = new Idioma();
+            idioma.setIdIdioma(rs.getInt("idIdioma"));
+            idioma.setNombreIdioma(rs.getString("nombreIdioma"));
+            idioma.setOficial(rs.getInt("oficial"));
+            idioma.setCodigoPais(rs.getString("codigoPais"));
+            // Asegúrate de que el atributo porcentaje esté disponible si es necesario
+            idioma.setPorcentaje(rs.getInt("porcentaje")); 
+            idiomas.add(idioma);
         }
-        return idiomas;
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "Error al consultar idiomas: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
     }
+    
+    return idiomas;
+}
 }

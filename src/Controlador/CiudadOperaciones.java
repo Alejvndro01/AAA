@@ -178,35 +178,30 @@ public class CiudadOperaciones {
     return ciudades;
     }
     
-    public List<Ciudad> ConsultarPorPais(String codigo) {
-        List<Ciudad> ciudades = new ArrayList<>();
-        String sql;
-            if (codigo.isEmpty()) {
-                sql = "SELECT * FROM ciudad"; 
-            } else {
-                sql = "SELECT * FROM ciudad WHERE codigoPais = ?";
-            }
-        try {
-            con = conectar.getConnection();
-            ps = con.prepareStatement(sql);
-            if (!codigo.isEmpty()) {
-                ps.setString(1, codigo);
-            }
-            rs = ps.executeQuery();
-                while (rs.next()) {
-                    Ciudad ciudad = new Ciudad();
-                    ciudad.setIdCiudad(rs.getInt("idCiudad"));
-                    ciudad.setNombreCiudad(rs.getString("nombreCiudad"));
-                    ciudad.setPoblacionCiudad(rs.getInt("poblacionCiudad"));
-                    ciudad.setCodigoPais(rs.getString("codigoPais"));
-                    ciudad.setDistrito(rs.getString("distrito"));
-                    
-                    ciudades.add(ciudad);
-                }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al consultar las ciudades: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    public List<Ciudad> ConsultarPorNombrePais(String nombrePais) {
+    List<Ciudad> ciudades = new ArrayList<>();
+    String sql = "SELECT c.* FROM ciudad c JOIN pais p ON c.codigoPais = p.codigoPais WHERE p.nombrePais = ?";
+    
+    try (Connection con = conectar.getConnection();
+         PreparedStatement ps = con.prepareStatement(sql)) {
+        
+        ps.setString(1, nombrePais);
+        ResultSet rs = ps.executeQuery();
+        
+        while (rs.next()) {
+            Ciudad ciudad = new Ciudad();
+            ciudad.setIdCiudad(rs.getInt("idCiudad"));
+            ciudad.setNombreCiudad(rs.getString("nombreCiudad"));
+            ciudad.setPoblacionCiudad(rs.getInt("poblacionCiudad"));
+            ciudad.setCodigoPais(rs.getString("codigoPais"));
+            ciudad.setDistrito(rs.getString("distrito"));
+            ciudades.add(ciudad);
         }
-        return ciudades;
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "Error al consultar ciudades: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
     }
+    
+    return ciudades;
+}
 }
 
